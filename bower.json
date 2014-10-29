@@ -1,0 +1,30 @@
+{
+  "name": "fcomponent",
+  "version": "0.0.1",
+  "homepage": "https://github.com/lexich/fcomponent",
+  "authors": [
+    "Efremov Alexey <lexich121@gmail.com>"
+  ],
+  "description": "Frontend components",
+  "main": "dist/fcomponent.js",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "frontend",
+    "js",
+    "coffeescript"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~1.11.1"
+  }
+}
