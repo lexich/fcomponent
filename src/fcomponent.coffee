@@ -61,7 +61,7 @@ ComponentsHolder = ($)->
         if $el.is("[#{ATTR}-#{name}]")
           _func.apply null, [$el].concat(args)
     }
-ComponentsHolder.version = "0.0.0"
+ComponentsHolder.version = "0.0.1"
 if (typeof define is 'function') and (typeof define.amd is 'object') and define.amd
   define ["jquery"], ($)-> ComponentsHolder($)
 else

@@ -27,9 +27,9 @@ version_coffee = through2.obj (file, enc, calback)->
     /\.version[ ]*=[ ]*[\'\"]([0-9\.]+)[\'\"]/g,
     ".version = \"#{version}\""
   )
-  @push file
-  calback()
-
+  fs.writeFile file.path, file.contents, (err)=>
+    @push file
+    calback(err)
 
 gulp.task "coffee", ->
   gulp.src PATH.coffee
