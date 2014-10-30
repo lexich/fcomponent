@@ -86,7 +86,7 @@ Example:
 ```javascript
 var $ = require("jquery");
 var fcomponent = require("fcomponent");
-var $el = '<div>';
+var $el = $('<div>');
 $("body").append($el);
 fcomponent.item("test", $el, "Hello component 3");
 ```
@@ -172,7 +172,7 @@ View = Backbone.View.extend({
     fcomponent.init(this.$el);
   },
   remove: function(){
-    fcomponent.init(this.$el);
+    fcomponent.destroy(this.$el);
     Backbone.View.prototype.remove.call(this);
   }
 });
