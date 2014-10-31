@@ -2,22 +2,22 @@ ComponentsHolder = ($)->
   if typeof String.prototype.trim isnt 'function'
     String.prototype.trim = -> this.replace /^\s+|\s+$/g, ''
 
-  ATTR = "data-component"
+  ATTR = "data-sblock"
 
   do ($=$)->
-    components = {}
+    blocks = {}
     {
-      add:(component, name=component.name)->
+      add:(block, name=block.name)->
         unless name
           throw new Error("Components:need name")
-        unless component.init?
-          throw new Error("Components:#{name} component.init == null ")
-        unless component.destroy?
-          throw new Error("Components:#{name} component.destroy == null ")
-        components[name] = component
+        unless block.init?
+          throw new Error("Components:#{name} block.init == null ")
+        unless block.destroy?
+          throw new Error("Components:#{name} block.destroy == null ")
+        blocks[name] = block
 
       item: (name, $el, options, args...)->
-        c = components[name]
+        c = blocks[name]
         return unless c
         return if $el.is("[#{ATTR}-#{name}]")
         if options
@@ -38,7 +38,7 @@ ComponentsHolder = ($)->
             _this.item.apply _this, [name, $el].concat(args)
 
       destroy: ($root)->
-        for name, c of components
+        for name, c of blocks
           $items = $root.find "[#{ATTR}-#{name}]"
           $items.each (i)->
             $el = $items.eq(i)
@@ -51,9 +51,9 @@ ComponentsHolder = ($)->
               $el.attr ATTR, name
 
       api: (name, funcname, $el, args...)->
-        component = components[name]
-        return "not api" if component.api
-        _func = component.api[funcname]
+        block = blocks[name]
+        return "not api" if block.api
+        _func = block.api[funcname]
         return "not api:#{funcname}" unless _func
         $items = $el.find("[#{ATTR}-#{name}]")
         $items.each (i)->

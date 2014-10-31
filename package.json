@@ -1,5 +1,5 @@
 {
-  "name": "fcomponent",
+  "name": "simpleblocks",
   "version": "0.0.1",
   "description": "Frontend components",
   "main": "gulpfile.js",

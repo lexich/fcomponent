@@ -1,12 +1,12 @@
 {
-  "name": "fcomponent",
+  "name": "simpleblocks",
   "version": "0.0.1",
-  "homepage": "https://github.com/lexich/fcomponent",
+  "homepage": "https://github.com/lexich/simpleblocks",
   "authors": [
     "Efremov Alexey <lexich121@gmail.com>"
   ],
-  "description": "Frontend components",
-  "main": "dist/fcomponent.js",
+  "description": "Frontend simple blocks",
+  "main": "dist/simpleblocks.js",
   "moduleType": [
     "amd",
     "globals"

@@ -1,27 +1,27 @@
-FComponent - Frontend components
+Simple blocks - Frontend blocks
 ==========
 ### Description
 FComponent is a small arhitecture framework for creating litte
-simple components. It may be usefull for simple integration to you
+simple blocks. It may be usefull for simple integration to you
 MV* framework. For example backbone.
 
 ### API
-#### `add(component, name)`  
-register component  
+#### `add(block, name)`  
+register blocks  
 
-- `component` - object of custom component definition  
-              component must have `add` and `destroy` methods,
-              otherwise method add throw Error. You can also
-              define `name` of component or pass it as second 
-              param.  
+- `block` - Object of custom block definition. 
+            Block must have `add` and `destroy` methods,
+            otherwise method `add` throws Error. You can also
+            define `name` of block or pass it as second 
+            param.  
 Type: Object {add:function(){}, destroy: function(){}}  
-- `name` - name of component  
+- `name` - name of block  
 Type: String  
-Default: `component.name` 
+Default: `block.name` 
 Example:  
 ```javascript
-var fcomponent = require("fcomponent");
-fcomponent.add({
+var sblocks = require("simpleblocks");
+sblocks.add({
   init: function($el, message){
     $el.html("<p>" + message + "</p>");
   },
@@ -32,108 +32,108 @@ fcomponent.add({
 ```
 
 #### `init($root, arguments...)`  
-Initialize all register components in `$root` DOM element  
-- `$root` - dom element where find components  
+Initialize all register blocks in `$root` DOM element  
+- `$root` - dom element where find blocks  
 Type: jQuery DOM object  
-- `arguments` - additional params for initialize component  
+- `arguments` - additional params for initialize block  
 Example:
 
-Define component in html
+Define block in html
 ```html
 <body>
 <div 
-  data-component="test" 
-  data-test="Hello component" />
+  data-sblock="test" 
+  data-test="Hello block" />
 <div 
-  data-component="test" 
-  data-test="Hello component2" />
+  data-sblock="test" 
+  data-test="Hello block" />
 </body>
 ```
 
-Initialize all components in body
+Initialize all blocks in body
 ```javascript
 var $ = require("jquery");
-var fcomponent = require("fcomponent");
-fcomponent.init($("body"));
+var sblocks = require("simpleblocks");
+sblocks.init($("body"));
 ```
 
 Result html is:
 ```html
 <body>
 <div 
-  data-component="test" 
-  data-component-test
-  data-test="Hello component">
-  <p>Hello component</p>
+  data-sblock="test" 
+  data-sblock-test
+  data-test="Hello block">
+  <p>Hello block</p>
 </div>
 <div 
-  data-component="test" 
-  data-component-test
-  data-test="Hello component2">
-  <p>Hello component2</p>
+  data-sblock="test" 
+  data-sblock-test
+  data-test="Hello block2">
+  <p>Hello block2</p>
 </div>
 </body>
 ```
 
 ### `item(name, $el, options, argunments...)`  
-Method to init not marked html element as component  
-- `name` - name of using component  
+Method to init not marked html element as block  
+- `name` - name of using block  
 - `$el` - DOM element  
-- `options` - options for initialize component
-- `arguments` - additional params for initialize component  
+- `options` - options for initialize block
+- `arguments` - additional params for initialize block  
 Example:  
 
 ```javascript
 var $ = require("jquery");
-var fcomponent = require("fcomponent");
+var sblock = require("simpleblocks");
 var $el = $('<div>');
 $("body").append($el);
-fcomponent.item("test", $el, "Hello component 3");
+sblock.item("test", $el, "Hello block 3");
 ```
 
 html dom result:
 ```html
 <body>
 <div 
-  data-component="test" 
-  data-component-test
-  data-test="Hello component">
-  <p>Hello component</p>
+  data-sblock="test" 
+  data-sblock-test
+  data-test="Hello block">
+  <p>Hello block</p>
 </div>
 <div 
-  data-component="test" 
-  data-component-test
-  data-test="Hello component2">
-  <p>Hello component2</p>
+  data-sblock="test" 
+  data-sblock-test
+  data-test="Hello block2">
+  <p>Hello block2</p>
 </div>
 <div 
-  data-component="test" 
-  data-component-test>
-  <p>Hello component3</p>
+  data-sblock="test" 
+  data-sblock-test>
+  <p>Hello block3</p>
 </div>
 </body>
 ```
 
 #### `destroy($root)`
-Destroy all initialize components in `$root` DOM element
-- `$root` - dom element where find components  
+Destroy all initialize blocks in `$root` DOM element
+- `$root` - dom element where find blocks  
 Type: jQuery DOM object  
 Example:  
 ```javascript
 var $ = require("jquery");
-var fcomponent = require("fcomponent");
-fcomponent.destroy($("body"));
+var sblocks = require("simpleblocks");
+sblocks.destroy($("body"));
 ```
 
 #### `api(name, funcname, $el, args...)`  
-Call custom api for component
-- `name` - name of component  
+Call custom api for block
+- `name` - name of block  
 - `funcname` - name of callable function  
-- `$el` - element where find dom element for initialize components  
+- `$el` - element where find dom element for initialize blocks  
 - `arguments` - additional params  
 Example:
 ```javascript
-fcomponent.add({
+sblocks.add({
   init: function($el, val){
     $el.text(val || 0)
   },
@@ -148,7 +148,7 @@ fcomponent.add({
 }, "test");
 /* after initializing apply method `api.val` to `$el` */
 $el.text() === "0"; //true
-fcomponent.api("test", "val", $el,  2);
+sblocks.api("test", "val", $el,  2);
 $el.text() === "2"; //true
 ```  
 
@@ -156,12 +156,12 @@ html dom result:
 ```html
 <body>
   <div 
-  data-component="test" 
-  data-test="Hello component"/>
+  data-sblock="test" 
+  data-test="Hello block"/>
   <div 
-    data-component="test" 
-    data-test="Hello component2"/>
-  <div data-component="test"/>
+    data-sblock="test" 
+    data-test="Hello block2"/>
+  <div data-sblock="test"/>
 </body>
 ```
 
@@ -169,10 +169,10 @@ html dom result:
 ```javascript
 View = Backbone.View.extend({
   render: function(){
-    fcomponent.init(this.$el);
+    sblocks.init(this.$el);
   },
   remove: function(){
-    fcomponent.destroy(this.$el);
+    sblocks.destroy(this.$el);
     Backbone.View.prototype.remove.call(this);
   }
 });

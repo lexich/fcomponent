@@ -9,30 +9,30 @@
         return this.replace(/^\s+|\s+$/g, '');
       };
     }
-    ATTR = "data-component";
+    ATTR = "data-sblocks";
     return (function($) {
-      var components;
-      components = {};
+      var blocks;
+      blocks = {};
       return {
-        add: function(component, name) {
+        add: function(block, name) {
           if (name == null) {
-            name = component.name;
+            name = block.name;
           }
           if (!name) {
             throw new Error("Components:need name");
           }
-          if (component.init == null) {
-            throw new Error("Components:" + name + " component.init == null ");
+          if (block.init == null) {
+            throw new Error("Components:" + name + " block.init == null ");
           }
-          if (component.destroy == null) {
-            throw new Error("Components:" + name + " component.destroy == null ");
+          if (block.destroy == null) {
+            throw new Error("Components:" + name + " block.destroy == null ");
           }
-          return components[name] = component;
+          return blocks[name] = block;
         },
         item: function() {
           var $el, args, c, name, options;
           name = arguments[0], $el = arguments[1], options = arguments[2], args = 4 <= arguments.length ? __slice.call(arguments, 3) : [];
-          c = components[name];
+          c = blocks[name];
           if (!c) {
             return;
           }
@@ -68,8 +68,8 @@
         destroy: function($root) {
           var $items, c, name, _results;
           _results = [];
-          for (name in components) {
-            c = components[name];
+          for (name in blocks) {
+            c = blocks[name];
             $items = $root.find("[" + ATTR + "-" + name + "]");
             _results.push($items.each(function(i) {
               var $el, val;
@@ -87,13 +87,13 @@
           return _results;
         },
         api: function() {
-          var $el, $items, args, component, funcname, name, _func;
+          var $el, $items, args, block, funcname, name, _func;
           name = arguments[0], funcname = arguments[1], $el = arguments[2], args = 4 <= arguments.length ? __slice.call(arguments, 3) : [];
-          component = components[name];
-          if (component.api) {
+          block = blocks[name];
+          if (block.api) {
             return "not api";
           }
-          _func = component.api[funcname];
+          _func = block.api[funcname];
           if (!_func) {
             return "not api:" + funcname;
           }
