@@ -9,7 +9,7 @@
         return this.replace(/^\s+|\s+$/g, '');
       };
     }
-    ATTR = "data-sblocks";
+    ATTR = "data-sblock";
     return (function($) {
       var blocks;
       blocks = {};
