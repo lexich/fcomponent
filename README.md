@@ -2,7 +2,10 @@ Simple blocks - Frontend blocks
 ==========
 [![Build Status](https://travis-ci.org/lexich/simple-blocks.svg)](https://travis-ci.org/lexich/simple-blocks)
 [![Bower version](https://badge.fury.io/bo/simple-blocks.svg)](http://badge.fury.io/bo/simple-blocks)
-[![Coverage Status](https://coveralls.io/repos/lexich/simple-blocks/badge.png)](https://coveralls.io/r/lexich/simple-blocks)
+[![Coverage Status](https://coveralls.io/repos/lexich/simple-blocks/badge.png)](https://coveralls.io/r/lexich/simpl
+e-blocks)
+[![Dependency Status](https://david-dm.org/lexich/simple-blocks.svg)](https://david-dm.org/lexich/simple-blocks)
+[![devDependency Status](https://david-dm.org/lexich/simple-blocks/dev-status.svg)](https://david-dm.org/lexich/simple-blocks#info=devDependencies)
 ### Description
 FComponent is a small arhitecture framework for creating litte
 simple blocks. It may be usefull for simple integration to you
