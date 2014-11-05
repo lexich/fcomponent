@@ -4,7 +4,9 @@ gutil = require "gulp-util"
 clean = require "gulp-clean"
 through2 = require "through2"
 fs = require "fs"
+karma = require('gulp-karma');
 gulpsync = require("gulp-sync") gulp
+argv = require('yargs').argv
 
 version = "0.0.0"
 try
@@ -16,7 +18,17 @@ console.log version
 PATH =
   coffee: "./src/*.coffee"
   build: "./dist/"
+  test: "./test/*.coffee"
   version: ["bower.json", "package.json"]
+
+gulp.task "test", ->
+  gulp.src PATH.test
+    .pipe karma {
+      configFile: "karma.conf.js"
+      action: if argv.watch then "watch" else "run"
+    }
+    .on("error", gutil.log)
+
 
 gulp.task "clean", ->
   gulp.src PATH.build, {read: false}

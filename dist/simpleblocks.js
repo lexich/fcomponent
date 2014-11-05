@@ -27,6 +27,9 @@
           if (block.destroy == null) {
             throw new Error("Components:" + name + " block.destroy == null ");
           }
+          if (blocks[name] != null) {
+            throw new Error("Components:" + name + " block is already define");
+          }
           return blocks[name] = block;
         },
         item: function() {
@@ -116,7 +119,7 @@
       return ComponentsHolder($);
     });
   } else {
-    window.ServerClient = ComponentsHolder(jQuery || $);
+    window.sblock = ComponentsHolder(jQuery || $);
   }
 
 }).call(this);
