@@ -8,3 +8,6 @@ before_script:
   - npm install -g gulp
   - npm install -g bower
   - bower install
+
+after_script:
+  - npm run coveralls
