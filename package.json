@@ -24,7 +24,7 @@
     "yargs": "^1.3.2"
   },
   "scripts": {
-    "test": "rm -rf ./coverage && gulp test",
+    "test": "gulp test",
     "coveralls": "gulp test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "authors": [
