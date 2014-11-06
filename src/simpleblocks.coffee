@@ -69,9 +69,10 @@ ComponentsHolder = ($)->
 
       api: (name, funcname, $el, args...)->
         block = blocks[name]
-        return "not api" if block.api
+        return "block '#{name}' not found" unless block
+        return "api property not found in '#{name}' block" unless block.api
         _func = block.api[funcname]
-        return "not api:#{funcname}" unless _func
+        return "method '#{funcname}' not found in api of '#{name}' block" unless _func
         $items = $el.find("[#{ATTR}-#{name}]")
         $items.each (i)->
           _func.apply null, [$items].concat(args)
@@ -80,7 +81,7 @@ ComponentsHolder = ($)->
         null
     }
 
-  scope =  "": initializer()
+  scope = {}
 
   remove = (name="")->
     scope[name] = null if scope[name]?

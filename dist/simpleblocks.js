@@ -3,7 +3,7 @@
     __slice = [].slice;
 
   ComponentsHolder = function($) {
-    var ATTR, destroyItem, initializer, scope;
+    var ATTR, destroyItem, initializer, remove, resolve, scope;
     if (typeof String.prototype.trim !== 'function') {
       String.prototype.trim = function() {
         return this.replace(/^\s+|\s+$/g, '');
@@ -113,12 +113,15 @@
           var $el, $items, args, block, funcname, name, _func;
           name = arguments[0], funcname = arguments[1], $el = arguments[2], args = 4 <= arguments.length ? __slice.call(arguments, 3) : [];
           block = blocks[name];
-          if (block.api) {
-            return "not api";
+          if (!block) {
+            return "block '" + name + "' not found";
+          }
+          if (!block.api) {
+            return "api property not found in '" + name + "' block";
           }
           _func = block.api[funcname];
           if (!_func) {
-            return "not api:" + funcname;
+            return "method '" + funcname + "' not found in api of '" + name + "' block";
           }
           $items = $el.find("[" + ATTR + "-" + name + "]");
           $items.each(function(i) {
@@ -131,23 +134,31 @@
         }
       };
     };
-    scope = {
-      "default": initializer()
-    };
-    scope["default"]._ = {
-      scope: function(name) {
-        return scope[name] != null ? scope[name] : scope[name] = initializer();
-      },
-      remove: function(name) {
-        if (name === "default") {
-          scope["default"] = initializer();
-        }
-        if (scope[name] != null) {
-          return scope[name] = null;
-        }
+    scope = {};
+    remove = function(name) {
+      if (name == null) {
+        name = "";
+      }
+      if (scope[name] != null) {
+        return scope[name] = null;
       }
     };
-    return scope["default"];
+    resolve = function(name) {
+      var _res;
+      if (name == null) {
+        name = "";
+      }
+      _res = scope[name];
+      if (!_res) {
+        _res = scope[name] = initializer();
+        _res.remove = function() {
+          return remove(name);
+        };
+      }
+      return _res;
+    };
+    resolve.remove = remove;
+    return resolve;
   };
 
   ComponentsHolder.version = "0.0.1";

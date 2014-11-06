@@ -60,3 +60,38 @@ describe "test init method", ->
   sblock.remove()
 
 describe "test api method", ->
+  block = window.sblock()
+  block.add {
+    name:"test"
+    init:($el)->
+      $el.text("init")
+    destroy:($el)->
+      $el.empty()
+    api:
+      update:($el, msg)->
+        $el.text msg
+  }
+  block.add {
+    name: "empty"
+    init: ->
+    destroy: ->
+  }
+  $el = $("<div>")
+
+  it "check api method update", ->
+    block.item "test", $el, null
+    "init".should.eql $el.text()
+    debugger
+    block.api "test", "update", $el, "update method"
+    "update method".should.eql $el.text()
+
+    resp = block.api "test1", "update", $el, "update method"
+    "block 'test1' not found".should.eql resp
+    resp = block.api "empty", "update", $el, "update method"
+    "api property not found in 'empty' block".should.eql resp
+    resp = block.api "test", "update1", $el, "update method"
+    "method 'update1' not found in api of 'test' block".should.eql resp
+
+    #block.remove()
+    #"".should.eql $el.text()
+
