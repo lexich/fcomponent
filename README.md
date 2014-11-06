@@ -25,7 +25,7 @@ Type: String
 Default: `block.name` 
 Example:  
 ```javascript
-var sblocks = require("simple-blocks");
+var sblocks = require("simple-blocks")();
 sblocks.add({
   init: function($el, message){
     $el.html("<p>" + message + "</p>");
@@ -58,7 +58,7 @@ Define block in html
 Initialize all blocks in body
 ```javascript
 var $ = require("jquery");
-var sblocks = require("simple-blocks");
+var sblocks = require("simple-blocks")();
 sblocks.init($("body"));
 ```
 
@@ -90,7 +90,7 @@ Example:
 
 ```javascript
 var $ = require("jquery");
-var sblock = require("simple-blocks");
+var sblock = require("simple-blocks")();
 var $el = $('<div>');
 $("body").append($el);
 sblock.item("test", $el, "Hello block 3");
@@ -126,7 +126,7 @@ Type: jQuery DOM object
 Example:  
 ```javascript
 var $ = require("jquery");
-var sblocks = require("simple-blocks");
+var sblocks = require("simple-blocks")();
 sblocks.destroy($("body"));
 ```
 

@@ -153,7 +153,7 @@
     return resolve;
   };
 
-  ComponentsHolder.version = "0.0.1";
+  ComponentsHolder.version = "0.0.2";
 
   if ((typeof define === "function") && (typeof define.amd === "object") && define.amd) {
     define(["jquery"], function($) {

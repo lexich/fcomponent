@@ -87,7 +87,7 @@ ComponentsHolder = ($)->
   resolve
 
 
-ComponentsHolder.version = "0.0.1"
+ComponentsHolder.version = "0.0.2"
 if (typeof define is "function") and (typeof define.amd is "object") and define.amd
   define ["jquery"], ($)-> ComponentsHolder($)
 else
