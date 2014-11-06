@@ -82,11 +82,17 @@ ComponentsHolder = ($)->
 
   scope =  "": initializer()
 
-  resolve = (name="")->
-    scope[name] or (scope[name] = initializer())
-
-  resolve.remove = (name="")->
+  remove = (name="")->
     scope[name] = null if scope[name]?
+
+  resolve = (name="")->
+    _res = scope[name]
+    unless _res
+      _res = scope[name] = initializer()
+      _res.remove = -> remove name
+    _res
+
+  resolve.remove = remove
 
   resolve
 

@@ -17,6 +17,7 @@ describe "test interface", ->
     (not sblock.add { init:(->), destroy:(->), name:"test" }).should.be.ok
     #dublicate init component
     "blocks:test block is already define".should.eql sblock.add {init:(->), destroy:(->), name:"test"}
+    sblock.remove()
 
 describe "test init method", ->
   sblock = window.sblock("test")
@@ -55,3 +56,7 @@ describe "test init method", ->
 
     "".should.eql $el1.text()
     $el.is("[data-sblock-hello]").should.be.not.ok
+
+  sblock.remove()
+
+describe "test api method", ->
