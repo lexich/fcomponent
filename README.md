@@ -183,4 +183,5 @@ View = Backbone.View.extend({
 });
 ```
 ### Cbangelog
+- 0.0.2 - bug fixing
 - 0.0.1 - public version
