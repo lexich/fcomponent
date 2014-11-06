@@ -144,18 +144,10 @@
       }
     };
     resolve = function(name) {
-      var _res;
       if (name == null) {
         name = "";
       }
-      _res = scope[name];
-      if (!_res) {
-        _res = scope[name] = initializer();
-        _res.remove = function() {
-          return remove(name);
-        };
-      }
-      return _res;
+      return scope[name] || (scope[name] = initializer());
     };
     resolve.remove = remove;
     return resolve;
