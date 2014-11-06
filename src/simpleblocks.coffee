@@ -80,16 +80,16 @@ ComponentsHolder = ($)->
         null
     }
 
-  scope =  default: initializer()
-  scope.default._ = {
-    scope: (name)->
-      (scope[name] ?= initializer())
-    remove: (name)->
-      if name is "default"
-        scope.default = initializer()
-      scope[name] = null if scope[name]?
-  }
-  scope.default
+  scope =  "": initializer()
+
+  resolve = (name="")->
+    scope[name] or (scope[name] = initializer())
+
+  resolve.remove = (name="")->
+    scope[name] = null if scope[name]?
+
+  resolve
+
 
 ComponentsHolder.version = "0.0.1"
 if (typeof define is 'function') and (typeof define.amd is 'object') and define.amd
