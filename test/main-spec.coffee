@@ -86,11 +86,11 @@ describe "test api method", ->
     "update method".should.eql $el.text()
 
     resp = block.api "test1", "update", $el, "update method"
-    "block 'test1' not found".should.eql resp
+    "block \"test1\" not found".should.eql resp
     resp = block.api "empty", "update", $el, "update method"
-    "api property not found in 'empty' block".should.eql resp
+    "api property not found in \"empty\" block".should.eql resp
     resp = block.api "test", "update1", $el, "update method"
-    "method 'update1' not found in api of 'test' block".should.eql resp
+    "method \"update1\" not found in api of \"test\" block".should.eql resp
 
   window.sblock.remove()
 

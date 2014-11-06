@@ -4,9 +4,9 @@
 
   ComponentsHolder = function($) {
     var ATTR, destroyItem, initializer, remove, resolve, scope;
-    if (typeof String.prototype.trim !== 'function') {
+    if (typeof String.prototype.trim !== "function") {
       String.prototype.trim = function() {
-        return this.replace(/^\s+|\s+$/g, '');
+        return this.replace(/^\s+|\s+$/g, "");
       };
     }
     ATTR = "data-sblock";
@@ -114,14 +114,14 @@
           name = arguments[0], funcname = arguments[1], $el = arguments[2], args = 4 <= arguments.length ? __slice.call(arguments, 3) : [];
           block = blocks[name];
           if (!block) {
-            return "block '" + name + "' not found";
+            return "block \"" + name + "\" not found";
           }
           if (!block.api) {
-            return "api property not found in '" + name + "' block";
+            return "api property not found in \"" + name + "\" block";
           }
           _func = block.api[funcname];
           if (!_func) {
-            return "method '" + funcname + "' not found in api of '" + name + "' block";
+            return "method \"" + funcname + "\" not found in api of \"" + name + "\" block";
           }
           $items = $el.find("[" + ATTR + "-" + name + "]");
           $items.each(function(i) {
@@ -155,7 +155,7 @@
 
   ComponentsHolder.version = "0.0.1";
 
-  if ((typeof define === 'function') && (typeof define.amd === 'object') && define.amd) {
+  if ((typeof define === "function") && (typeof define.amd === "object") && define.amd) {
     define(["jquery"], function($) {
       return ComponentsHolder($);
     });

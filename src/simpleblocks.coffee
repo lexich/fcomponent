@@ -1,10 +1,10 @@
 ComponentsHolder = ($)->
-  if typeof String.prototype.trim isnt 'function'
-    String.prototype.trim = -> this.replace /^\s+|\s+$/g, ''
+  if typeof String.prototype.trim isnt "function"
+    String.prototype.trim = -> this.replace /^\s+|\s+$/g, ""
 
   ATTR = "data-sblock"
 
-  destroyItem =  ($el, name, c)->
+  destroyItem = ($el, name, c)->
     c.destroy $el
     $el.removeAttr "#{ATTR}-#{name}"
     if $el.is("[#{ATTR}]")
@@ -20,7 +20,7 @@ ComponentsHolder = ($)->
   initializer = ->
     blocks = {}
     {
-      add:(block, name=block.name)->
+      add: (block, name=block.name)->
         return "blocks:need name" unless name
         return "blocks:#{name} block.init == null" unless block.init?
         return "blocks:#{name} block.destroy == null" unless block.destroy?
@@ -55,7 +55,6 @@ ComponentsHolder = ($)->
           for name in names
             name = name.trim()
             _this.item.apply _this, [name, $el].concat(args)
-
         null
 
       destroy: ($root)->
@@ -69,10 +68,10 @@ ComponentsHolder = ($)->
 
       api: (name, funcname, $el, args...)->
         block = blocks[name]
-        return "block '#{name}' not found" unless block
-        return "api property not found in '#{name}' block" unless block.api
+        return "block \"#{name}\" not found" unless block
+        return "api property not found in \"#{name}\" block" unless block.api
         _func = block.api[funcname]
-        return "method '#{funcname}' not found in api of '#{name}' block" unless _func
+        return "method \"#{funcname}\" not found in api of \"#{name}\" block" unless _func
         $items = $el.find("[#{ATTR}-#{name}]")
         $items.each (i)->
           _func.apply null, [$items].concat(args)
@@ -82,20 +81,14 @@ ComponentsHolder = ($)->
     }
 
   scope = {}
-
-  remove = (name="")->
-    scope[name] = null if scope[name]?
-
-  resolve = (name="")->
-    scope[name] or (scope[name] = initializer())
-
+  remove = (name="")-> scope[name] = null if scope[name]?
+  resolve = (name="")-> scope[name] or (scope[name] = initializer())
   resolve.remove = remove
-
   resolve
 
 
 ComponentsHolder.version = "0.0.1"
-if (typeof define is 'function') and (typeof define.amd is 'object') and define.amd
+if (typeof define is "function") and (typeof define.amd is "object") and define.amd
   define ["jquery"], ($)-> ComponentsHolder($)
 else
   window.sblock = ComponentsHolder(jQuery or $)
