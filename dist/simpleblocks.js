@@ -27,12 +27,39 @@
       }
     };
     initializer = function() {
-      var blocks;
+      var attr_prop, blocks, get_names, selectors, selectors_array;
       blocks = {};
+      selectors = {};
+      selectors_array = [];
+      attr_prop = function() {
+        return ["[" + ATTR + "]"].concat(selectors_array).join(",");
+      };
+      get_names = function($el) {
+        var attr_val, name, names, selector;
+        attr_val = $el.attr(ATTR);
+        names = attr_val ? attr_val.split(" ") : [];
+        for (name in selectors) {
+          selector = selectors[name];
+          if ($el.is(selector) && names.indexOf(name) < 0) {
+            names.push(name);
+          }
+        }
+        $el.attr(ATTR, names.join(" "));
+        return names;
+      };
       return {
-        add: function(block, name) {
-          if (name == null) {
+        add: function(block, options) {
+          var name;
+          if (!options) {
             name = block.name;
+          } else if (options.toString() === "[object Object]") {
+            name = options.name || block.name;
+            if (options.selector) {
+              selectors[name] = options.selector;
+              selectors_array.push(options.selector);
+            }
+          } else {
+            name = options || block.name;
           }
           if (!name) {
             return "blocks:need name";
@@ -69,22 +96,23 @@
           return null;
         },
         init: function() {
-          var $items, $root, args, name, names, _i, _len, _this;
+          var $items, $root, args, name, names, selector, _i, _len, _this;
           $root = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
           _this = this;
-          if ($root.is("[" + ATTR + "]")) {
-            names = $root.attr(ATTR).split();
+          selector = attr_prop();
+          if ($root.is(selector)) {
+            names = get_names($root);
             for (_i = 0, _len = names.length; _i < _len; _i++) {
               name = names[_i];
               name = name.trim();
               _this.item.apply(_this, [name, $root].concat(args));
             }
           }
-          $items = $root.find("[" + ATTR + "]");
+          $items = $root.find(selector);
           $items.each(function(i) {
             var $el, _j, _len1, _results;
             $el = $items.eq(i);
-            names = $el.attr(ATTR).split();
+            names = get_names($el);
             _results = [];
             for (_j = 0, _len1 = names.length; _j < _len1; _j++) {
               name = names[_j];
@@ -153,7 +181,7 @@
     return resolve;
   };
 
-  ComponentsHolder.version = "0.0.2";
+  ComponentsHolder.version = "0.0.3";
 
   if ((typeof define === "function") && (typeof define.amd === "object") && define.amd) {
     define(["jquery"], function($) {

@@ -19,8 +19,29 @@ ComponentsHolder = ($)->
 
   initializer = ->
     blocks = {}
+    selectors = {}
+    selectors_array = []
+    attr_prop = -> ["[#{ATTR}]"].concat(selectors_array).join(",")
+    get_names = ($el)->
+      attr_val = $el.attr(ATTR)
+      names = if attr_val then attr_val.split(" ") else []
+      for name, selector of selectors
+        if $el.is(selector) and names.indexOf(name) < 0
+          names.push name
+      $el.attr ATTR, names.join(" ")
+      names
     {
-      add: (block, name=block.name)->
+      add: (block, options)->
+        unless options
+          name = block.name
+        else if options.toString() is "[object Object]"
+          name = options.name or block.name
+          if options.selector
+            selectors[name] = options.selector
+            selectors_array.push options.selector
+        else
+          name = options or block.name
+
         return "blocks:need name" unless name
         return "blocks:#{name} block.init == null" unless block.init?
         return "blocks:#{name} block.destroy == null" unless block.destroy?
@@ -42,16 +63,17 @@ ComponentsHolder = ($)->
 
       init: ($root, args...)->
         _this = this
-        if $root.is("[#{ATTR}]")
-          names = $root.attr(ATTR).split()
+        selector = attr_prop()
+        if $root.is selector
+          names = get_names($root)
           for name in names
             name = name.trim()
             _this.item.apply _this, [name, $root].concat(args)
 
-        $items = $root.find("[#{ATTR}]")
+        $items = $root.find selector
         $items.each (i)->
           $el = $items.eq(i)
-          names = $el.attr(ATTR).split()
+          names = get_names $el
           for name in names
             name = name.trim()
             _this.item.apply _this, [name, $el].concat(args)
@@ -87,7 +109,7 @@ ComponentsHolder = ($)->
   resolve
 
 
-ComponentsHolder.version = "0.0.2"
+ComponentsHolder.version = "0.0.3"
 if (typeof define is "function") and (typeof define.amd is "object") and define.amd
   define ["jquery"], ($)-> ComponentsHolder($)
 else
