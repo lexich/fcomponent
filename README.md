@@ -80,7 +80,7 @@ Result html is:
 </body>
 ```
 
-### `item(name, $el, options, argunments...)`  
+### `item(name, $el, options, arguments...)`  
 Method to init not marked html element as block  
 - `name` - name of using block  
 - `$el` - DOM element  
