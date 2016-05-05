@@ -1,8 +1,8 @@
 {
   "name": "simple-blocks",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Frontend components",
-  "main": "dist/simple-blocks.js",
+  "main": "dist/simpleblocks.js",
   "dependencies": {
     "jquery": "^2.2.3"
   },
