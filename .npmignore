@@ -1,0 +1,15 @@
+.editorconfig
+.git
+.gitignore
+.npmignore
+.travis.yml
+bower.json
+bower_components
+coverage
+gulpfile.coffee
+gulpfile.js
+karma.conf.js
+node_modules
+package.json
+src
+test
