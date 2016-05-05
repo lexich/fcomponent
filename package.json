@@ -1,9 +1,11 @@
 {
   "name": "simple-blocks",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Frontend components",
-  "main": "gulpfile.js",
-  "dependencies": {},
+  "main": "dist/simple-blocks.js",
+  "dependencies": {
+    "jquery": "^2.2.3"
+  },
   "devDependencies": {
     "chai": "^1.9.2",
     "coffee-script": "^1.8.0",

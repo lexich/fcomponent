@@ -110,7 +110,14 @@ ComponentsHolder = ($)->
 
 
 ComponentsHolder.version = "0.0.3"
-if (typeof define is "function") and (typeof define.amd is "object") and define.amd
+
+root = (typeof self == "object" && self.self == self && self) or (typeof global == "object" && global.global == global && global)
+
+
+if (typeof define == 'function' && define.amd)
   define ["jquery"], ($)-> ComponentsHolder($)
+else if (typeof exports != "undefined")
+  $ = require("jquery")
+  module.exports = ComponentsHolder($)
 else
-  window.sblock = ComponentsHolder(jQuery or $)
+  root.sblock = ComponentsHolder(jQuery or $)

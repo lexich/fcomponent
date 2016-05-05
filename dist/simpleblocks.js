@@ -1,6 +1,6 @@
 (function() {
-  var ComponentsHolder,
-    __slice = [].slice;
+  var $, ComponentsHolder, root,
+    slice = [].slice;
 
   ComponentsHolder = function($) {
     var ATTR, destroyItem, initializer, remove, resolve, scope;
@@ -13,7 +13,7 @@
     destroyItem = function($el, name, c) {
       var names, val;
       c.destroy($el);
-      $el.removeAttr("" + ATTR + "-" + name);
+      $el.removeAttr(ATTR + "-" + name);
       if ($el.is("[" + ATTR + "]")) {
         val = $el.attr(ATTR);
         names = val.split(",");
@@ -78,7 +78,7 @@
         },
         item: function() {
           var $el, args, c, name, options;
-          name = arguments[0], $el = arguments[1], options = arguments[2], args = 4 <= arguments.length ? __slice.call(arguments, 3) : [];
+          name = arguments[0], $el = arguments[1], options = arguments[2], args = 4 <= arguments.length ? slice.call(arguments, 3) : [];
           c = blocks[name];
           if (!c) {
             return "block not found";
@@ -92,34 +92,34 @@
             options = $el.data(name);
           }
           c.init.apply(c, [$el, options].concat(args));
-          $el.attr("" + ATTR + "-" + name, "");
+          $el.attr(ATTR + "-" + name, "");
           return null;
         },
         init: function() {
-          var $items, $root, args, name, names, selector, _i, _len, _this;
-          $root = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+          var $items, $root, _this, args, j, len, name, names, selector;
+          $root = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
           _this = this;
           selector = attr_prop();
           if ($root.is(selector)) {
             names = get_names($root);
-            for (_i = 0, _len = names.length; _i < _len; _i++) {
-              name = names[_i];
+            for (j = 0, len = names.length; j < len; j++) {
+              name = names[j];
               name = name.trim();
               _this.item.apply(_this, [name, $root].concat(args));
             }
           }
           $items = $root.find(selector);
           $items.each(function(i) {
-            var $el, _j, _len1, _results;
+            var $el, k, len1, results;
             $el = $items.eq(i);
             names = get_names($el);
-            _results = [];
-            for (_j = 0, _len1 = names.length; _j < _len1; _j++) {
-              name = names[_j];
+            results = [];
+            for (k = 0, len1 = names.length; k < len1; k++) {
+              name = names[k];
               name = name.trim();
-              _results.push(_this.item.apply(_this, [name, $el].concat(args)));
+              results.push(_this.item.apply(_this, [name, $el].concat(args)));
             }
-            return _results;
+            return results;
           });
           return null;
         },
@@ -138,8 +138,8 @@
           return null;
         },
         api: function() {
-          var $el, $items, args, block, funcname, name, _func;
-          name = arguments[0], funcname = arguments[1], $el = arguments[2], args = 4 <= arguments.length ? __slice.call(arguments, 3) : [];
+          var $el, $items, _func, args, block, funcname, name;
+          name = arguments[0], funcname = arguments[1], $el = arguments[2], args = 4 <= arguments.length ? slice.call(arguments, 3) : [];
           block = blocks[name];
           if (!block) {
             return "block \"" + name + "\" not found";
@@ -183,12 +183,17 @@
 
   ComponentsHolder.version = "0.0.3";
 
-  if ((typeof define === "function") && (typeof define.amd === "object") && define.amd) {
+  root = (typeof self === "object" && self.self === self && self) || (typeof global === "object" && global.global === global && global);
+
+  if (typeof define === 'function' && define.amd) {
     define(["jquery"], function($) {
       return ComponentsHolder($);
     });
+  } else if (typeof exports !== "undefined") {
+    $ = require("jquery");
+    module.exports = ComponentsHolder($);
   } else {
-    window.sblock = ComponentsHolder(jQuery || $);
+    root.sblock = ComponentsHolder(jQuery || $);
   }
 
 }).call(this);
